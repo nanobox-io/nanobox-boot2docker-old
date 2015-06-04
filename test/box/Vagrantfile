@@ -1,19 +1,20 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
 Vagrant.configure("2") do |config|
   config.ssh.shell = "sh"
   config.ssh.username = "docker"
 
+  config.vm.box = File.expand_path("../../../pb-b2d_virtualbox.box", __FILE__)
+
+  config.vm.synced_folder ".", "/vagrant"
+
   # Expose the Docker port
   config.vm.network "forwarded_port", guest: 2375, host: 2375, host_ip: "127.0.0.1", auto_correct: true, id: "docker"
 
-  # Attach the ISO
   config.vm.provider "virtualbox" do |v|
-    v.customize "pre-boot", [
-      "storageattach", :id,
-      "--storagectl", "IDE Controller",
-      "--port", "0",
-      "--device", "1",
-      "--type", "dvddrive",
-      "--medium", File.expand_path("../nanobox-boot2docker.iso", __FILE__),
-    ]
+    v.customize ["modifyvm", :id, "--memory", "256"]
   end
+
 end
+

@@ -1,7 +1,7 @@
 {
     "builders": [{
         "type": "virtualbox-iso",
-        "iso_url": "pagoda-b2d.iso",
+        "iso_url": "nanobox-boot2docker.iso",
         "iso_checksum_type": "none",
         "boot_wait": "5s",
         "guest_additions_mode": "attach",
@@ -18,8 +18,8 @@
 
     "post-processors": [{
         "type": "vagrant",
-        "include": ["pagoda-b2d.iso"],
+        "include": ["nanobox-boot2docker.iso"],
         "vagrantfile_template": "vagrantfile.tpl",
-        "output": "pb-b2d_{{.Provider}}.box"
+        "output": "nanobox-boot2docker.box"
     }]
 }
