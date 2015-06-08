@@ -2,10 +2,10 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.ssh.shell = "sh"
+  config.ssh.shell = "bash"
   config.ssh.username = "docker"
 
-  config.vm.box = File.expand_path("../../../pb-b2d_virtualbox.box", __FILE__)
+  config.vm.box = File.expand_path("../../../nanobox-boot2docker.box", __FILE__)
 
   config.vm.synced_folder ".", "/vagrant"
 
@@ -17,4 +17,3 @@ Vagrant.configure("2") do |config|
   end
 
 end
-

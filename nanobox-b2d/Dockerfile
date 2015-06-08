@@ -20,10 +20,15 @@ RUN for dep in bash readline ncurses; do \
 
 RUN echo "/bin/bash" >> /rootfs/etc/shells
 
-ADD bashrc /usr/local/etc/bashrc
-RUN chown tc:staff /rootfs/etc/passwd
+ADD bashrc /rootfs/usr/local/etc/bashrc
 
 ADD passwd /rootfs/etc/passwd
+RUN chown root:staff /rootfs/etc/passwd
+ADD shadow /rootfs/etc/shadow
+RUN chown root:staff /rootfs/etc/shadow
+ADD sudoers /rootfs/etc/sudoers
+RUN chown root:root /rootfs/etc/sudoers
+
 RUN chmod 664 /rootfs/etc/passwd
 RUN chown root:staff /rootfs/etc/passwd
 

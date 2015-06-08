@@ -7,7 +7,7 @@ $script = <<SCRIPT
 # fetch boot2docker starting point
 docker pull boot2docker/boot2docker
 # create new docker image to output custom iso
-docker build -t nanobox-boot2docker /vagrant/nanobox-b2d
+docker build -t nanobox-boot2docker /vagrant/nanobox-b2d && \
 # run custom docker image and capture output to iso
 docker run --rm nanobox-boot2docker > /vagrant/nanobox-boot2docker.iso
 SCRIPT

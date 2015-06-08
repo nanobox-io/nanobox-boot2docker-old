@@ -1,7 +1,7 @@
 {
     "builders": [{
         "type": "virtualbox-iso",
-        "iso_url": "nanobox-boot2docker.iso",
+        "iso_url": "./nanobox-boot2docker.iso",
         "iso_checksum_type": "none",
         "boot_wait": "5s",
         "guest_additions_mode": "attach",
@@ -18,7 +18,7 @@
 
     "post-processors": [{
         "type": "vagrant",
-        "include": ["nanobox-boot2docker.iso"],
+        "include": ["./nanobox-boot2docker.iso"],
         "vagrantfile_template": "vagrantfile.tpl",
         "output": "nanobox-boot2docker.box"
     }]
