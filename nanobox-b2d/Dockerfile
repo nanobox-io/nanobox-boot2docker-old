@@ -1,7 +1,7 @@
 FROM boot2docker/boot2docker
 
 # Customize for Vagrant
-ADD vagrant  /rootfs/etc/rc.d/vagrant
+ADD files/vagrant  /rootfs/etc/rc.d/vagrant
 RUN echo "/etc/rc.d/vagrant" >> /rootfs/opt/bootsync.sh
 
 # Include rsync
@@ -9,6 +9,16 @@ RUN cp /usr/bin/rsync /rootfs/usr/bin/rsync
 RUN cp /lib/x86_64-linux-gnu/libattr.so.1 /rootfs/lib/libattr.so.1
 RUN cp /lib/x86_64-linux-gnu/libacl.so.1 /rootfs/lib/libacl.so.1
 RUN cp /lib/x86_64-linux-gnu/libpopt.so.0 /rootfs/lib/libpopt.so.0
+
+# Install nanobox-server
+ADD files/nanobox-server /rootfs/usr/local/bin/nanobox-server
+ADD files/services/. /rootfs/etc/init.d/services/
+RUN echo "/etc/init.d/services/nanoboxd start" >> /rootfs/opt/bootlocal.sh
+# This is where services that need to run on boot need to get put,
+# [this](http://distro.ibiblio.org/tinycorelinux/corebook.pdf) is useful, but
+# boot2docker has a customized tinycore
+RUN echo "/etc/rc.d/nanoboxd" >> /rootfs/opt/bootscript.sh
+ADD files/nanoboxd /rootfs/etc/rc.d/nanoboxd
 
 # rsync when available
 RUN for dep in bash readline ncurses; do \
@@ -20,14 +30,19 @@ RUN for dep in bash readline ncurses; do \
 
 RUN echo "/bin/bash" >> /rootfs/etc/shells
 
-ADD bashrc /rootfs/usr/local/etc/bashrc
+ADD files/bashrc /rootfs/usr/local/etc/bashrc
+# ADD files/bashrc /rootfs/root/.bashrc
+# ADD files/bashrc /rootfs/home/docker/.bashrc
+ADD files/motd /rootfs/etc/motd
+RUN sed -i "s/DATE/$(date)/g" /rootfs/etc/motd
 
-ADD passwd /rootfs/etc/passwd
+ADD files/passwd /rootfs/etc/passwd
 RUN chown root:staff /rootfs/etc/passwd
-ADD shadow /rootfs/etc/shadow
+ADD files/shadow /rootfs/etc/shadow
 RUN chown root:staff /rootfs/etc/shadow
-ADD sudoers /rootfs/etc/sudoers
+ADD files/sudoers /rootfs/etc/sudoers
 RUN chown root:root /rootfs/etc/sudoers
+RUN chmod 440 /rootfs/etc/sudoers
 
 RUN chmod 664 /rootfs/etc/passwd
 RUN chown root:staff /rootfs/etc/passwd

@@ -29,8 +29,7 @@ $ vagrant destroy --force
 ...
 $ packer build template.json
 ...
-```  
+```
    
 Note: To use the newly created box, you may need to remove any old boxes from vagrant.   
 Find with `vagrant box list` and remove with `vagrant box remove $NAME`
-  

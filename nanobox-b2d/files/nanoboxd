@@ -1,0 +1,2 @@
+#!/bin/sh
+/usr/local/bin/nanobox-server >> /var/log/nanoboxd.log 2>&1 &

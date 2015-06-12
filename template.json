@@ -3,7 +3,7 @@
         "type": "virtualbox-iso",
         "iso_url": "./nanobox-boot2docker.iso",
         "iso_checksum_type": "none",
-        "boot_wait": "5s",
+        "boot_wait": "10s",
         "guest_additions_mode": "attach",
         "guest_os_type": "Linux_64",
         "ssh_username": "docker",
