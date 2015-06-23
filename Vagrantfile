@@ -3,6 +3,13 @@
 
 version = File.read("version")
 
+$wait = <<SCRIPT
+echo "Waiting for docker sock file"
+while [ ! -S /var/run/docker.sock ]; do
+  sleep 1
+done
+SCRIPT
+
 $script = <<SCRIPT
 # fetch boot2docker starting point
 docker pull boot2docker/boot2docker
@@ -21,6 +28,9 @@ Vagrant.configure(2) do |config|
   config.vm.box_url = "https://github.com/pagodabox/nanobox-boot2docker/releases/download/#{version}/nanobox-boot2docker.box"
 
   config.vm.synced_folder ".", "/vagrant"
+
+  # wait for docker to be running
+  config.vm.provision "shell", inline: $wait
 
   # Create custom iso
   config.vm.provision "shell", inline: $script
