@@ -27,7 +27,7 @@ update() {
 case "${1}" in
   start)
     update
-    /usr/local/bin/nanobox-server/nanobox-server >> /var/log/nanoboxd.log 2>&1 &
+    /usr/local/bin/nanobox-server >> /var/log/nanoboxd.log 2>&1 &
     ;;
 
   stop)
