@@ -29,7 +29,7 @@ ADD files/nanoboxd /rootfs/etc/rc.d/nanoboxd
 # rsync when available
 RUN for dep in bash readline ncurses; do \
     echo "Download http://tinycorelinux.net/6.x/x86_64/tcz/$dep.tcz" &&\
-        curl -L -o /tmp/$dep.tcz http://tinycorelinux.net/6.x/x86_64/tcz/$dep.tcz && \
+        curl -s -L -o /tmp/$dep.tcz http://tinycorelinux.net/6.x/x86_64/tcz/$dep.tcz && \
         unsquashfs -f -d /rootfs /tmp/$dep.tcz && \
         rm -f /tmp/$dep.tcz ;\
     done
