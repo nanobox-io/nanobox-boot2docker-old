@@ -11,7 +11,9 @@ RUN cp /lib/x86_64-linux-gnu/libacl.so.1 /rootfs/lib/libacl.so.1
 RUN cp /lib/x86_64-linux-gnu/libpopt.so.0 /rootfs/lib/libpopt.so.0
 
 # Install nanobox-server
-ADD files/nanobox-server /rootfs/usr/local/bin/nanobox-server
+ADD \
+  https://s3.amazonaws.com/tools.nanobox.io/server/linux/amd64/nanobox-server \
+  /rootfs/usr/local/bin/nanobox-server
 ADD files/services/. /rootfs/etc/init.d/services/
 RUN echo "/etc/init.d/services/nanoboxd start" >> /rootfs/opt/bootlocal.sh
 # This is where services that need to run on boot need to get put,
