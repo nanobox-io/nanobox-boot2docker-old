@@ -14,6 +14,7 @@ RUN cp /lib/x86_64-linux-gnu/libpopt.so.0 /rootfs/lib/libpopt.so.0
 ADD \
   https://s3.amazonaws.com/tools.nanobox.io/server/linux/amd64/nanobox-server \
   /rootfs/usr/local/bin/nanobox-server
+RUN chmod 755 /rootfs/usr/local/bin/nanobox-server
 RUN mkdir -p /rootfs/var/nanobox
 ADD \
   https://s3.amazonaws.com/tools.nanobox.io/server/linux/amd64/nanobox-server.md5 \
