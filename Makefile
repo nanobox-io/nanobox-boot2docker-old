@@ -1,11 +1,11 @@
 VERSION=$(shell cat ./version)
 
-build: boot2docker-nano.iso
+build: nanobox-boot2docker.iso
 	time packer build -parallel=false template.json
 
-prepare: clean boot2docker-nano.iso
+prepare: clean nanobox-boot2docker.iso
 
-boot2docker-nano.iso:
+nanobox-boot2docker.iso:
 	vagrant up && vagrant destroy --force
 
 re-box:
