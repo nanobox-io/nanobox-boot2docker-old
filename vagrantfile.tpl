@@ -16,5 +16,6 @@ Vagrant.configure("2") do |config|
       "--type", "dvddrive",
       "--medium", File.expand_path("../nanobox-boot2docker.iso", __FILE__),
     ]
+    v.customize ["modifyvm", :id, "--ioapic", "on"]
   end
 end

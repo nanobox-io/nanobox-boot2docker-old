@@ -1,2 +1,2 @@
 #!/bin/sh
-/usr/local/bin/nanobox-server >> /var/log/nanoboxd.log 2>&1 &
+/etc/init.d/services/nanoboxd start >> /var/log/nanoboxd.log 2>&1 &
