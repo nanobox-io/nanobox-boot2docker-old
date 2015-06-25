@@ -8,6 +8,7 @@
         "guest_os_type": "Linux_64",
         "ssh_username": "docker",
         "ssh_password": "tcuser",
+        "headless": "true",
         "shutdown_command": "sudo poweroff"
     }],
 
@@ -21,5 +22,15 @@
         "include": ["./nanobox-boot2docker.iso"],
         "vagrantfile_template": "vagrantfile.tpl",
         "output": "nanobox-boot2docker.box"
+    },
+    {
+        "type": "atlas",
+        "only": ["virtualbox-iso"],
+        "artifact": "{{user `atlas_username`}}/{{user `atlas_name`}}",
+        "artifact_type": "vagrant.box",
+        "metadata": {
+            "provider": "virtualbox",
+            "version": "0.0.1"
+        }
     }]
 }

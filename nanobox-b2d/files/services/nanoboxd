@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 update() {
   # extract installed version
@@ -6,9 +6,10 @@ update() {
 
   # download the latest checksum
   curl \
+    -f \
     -k \
     -s \
-    -o /var/nanobox/nanobox-server.md5
+    -o /var/nanobox/nanobox-server.md5 \
     https://s3.amazonaws.com/tools.nanobox.io/server/linux/amd64/nanobox-server.md5
 
   # compare versions
@@ -17,10 +18,12 @@ update() {
   if [ ! "$current" = "$latest" ]; then
     # get the latest server binary
     curl \
+      -f \
       -k \
       -s \
-      -o /usr/local/bin/nanobox-server
-      https://s3.amazonaws.com/tools.nanobox.io/server/linux/amd64/nanobox-server
+      -o /usr/local/bin/nanobox-server \
+      https://s3.amazonaws.com/tools.nanobox.io/server/linux/amd64/nanobox-server && \
+        chmod 755 /usr/local/bin/nanobox-server
   fi
 }
 
