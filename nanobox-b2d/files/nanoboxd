@@ -1,2 +1,0 @@
-#!/bin/sh
-/etc/init.d/services/nanoboxd start >> /var/log/nanoboxd.log 2>&1 &

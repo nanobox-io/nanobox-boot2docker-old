@@ -1,4 +1,6 @@
 VERSION=$(shell cat ./version)
+ID=$(shell curl -s https://api.github.com/repos/pagodabox/nanobox-boot2docker/releases | json 0.id | tr -d '\n')
+TOKEN=$(shell read -r -p "Enter Token: " token; echo $$token)
 
 build: nanobox-boot2docker.iso
 	time packer build -parallel=false template.json
@@ -23,4 +25,11 @@ release:
 	git tag -a $(VERSION) -m $(VERSION)
 	git push --tags
 
-.PHONY: clean prepare build
+upload:
+	@curl -H "Authorization: token $(TOKEN)" \
+		-H "Accept: application/vnd.github.manifold-preview" \
+		-H "Content-Type: application/octet-stream" \
+		--data-binary @nanobox-boot2docker.box \
+		"https://uploads.github.com/repos/pagodabox/nanobox-boot2docker/releases/$(ID)/assets?name=nanobox-boot2docker.box"
+
+.PHONY: prepare build
