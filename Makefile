@@ -1,5 +1,5 @@
 VERSION=$(shell cat ./version)
-ID=$(shell curl -s https://api.github.com/repos/pagodabox/nanobox-boot2docker/releases | json 0.id | tr -d '\n')
+ID=$(shell curl -s https://api.github.com/repos/pagodabox/nanobox-boot2docker/releases/tags/$(VERSION) | json id | tr -d '\n')
 TOKEN=$(shell read -r -p "Enter Token: " token; echo $$token)
 
 build: nanobox-boot2docker.iso
@@ -24,6 +24,16 @@ release:
 	vim version
 	git tag -a $(VERSION) -m $(VERSION)
 	git push --tags
+	@curl -H "Authorization: token $(TOKEN)" \
+	-s https://api.github.com/repos/pagodabox/nanobox-boot2docker/releases -d \
+	"{ \
+		\"tag_name\": \"$(VERSION)\", \
+		\"target_commitish\": \"master\", \
+		\"name\": \"$(VERSION)\", \"body\": \
+		\"boot2docker image for [nanobox](nanobox.io)\n========================\n\", \
+		\"draft\": false, \
+		\"prerelease\": false \
+	}"
 
 upload:
 	@curl -H "Authorization: token $(TOKEN)" \
