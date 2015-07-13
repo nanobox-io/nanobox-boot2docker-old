@@ -15,6 +15,26 @@
     "provisioners": [{
       "type": "shell",
       "inline": ["mkfs.ext4 -F -L boot2docker-data /dev/sda"]
+    },
+    {
+      "type": "shell",
+      "inline": ["sudo reboot"]
+    },
+    {
+      "type": "shell",
+      "inline": ["sudo /usr/local/etc/init.d/openssh stop"]
+    },
+    {
+      "type": "shell",
+      "inline": ["while [ ! -S /var/run/docker.sock ]; do sleep 1; done"]
+    },
+    {
+      "type": "shell",
+      "inline": ["docker pull nanobox/code"]
+    },
+    {
+      "type": "shell",
+      "inline": ["docker pull nanobox/build"]
     }],
 
     "post-processors": [{
