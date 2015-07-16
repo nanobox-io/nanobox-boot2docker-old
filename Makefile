@@ -5,6 +5,9 @@ TOKEN=$(shell read -r -p "Enter Token: " token; echo $$token)
 build: nanobox-boot2docker.iso
 	time packer build -parallel=false template.json
 
+build-devel: nanobox-boot2docker.iso
+	time packer build -parallel=false template-devel.json
+
 prepare: clean nanobox-boot2docker.iso
 
 nanobox-boot2docker.iso:
@@ -19,6 +22,7 @@ clean:
 	rm -rf *.iso *.box
 	vagrant destroy --force
 	vagrant box remove "`pwd`/nanobox-boot2docker.box" -f
+	vagrant box remove "`pwd`/nanobox-boot2docker-devel.box" -f
 
 release:
 	vim version
@@ -41,5 +45,12 @@ upload:
 		-H "Content-Type: application/octet-stream" \
 		--data-binary @nanobox-boot2docker.box \
 		"https://uploads.github.com/repos/pagodabox/nanobox-boot2docker/releases/$(ID)/assets?name=nanobox-boot2docker.box"
+
+upload-devel:
+	@curl -H "Authorization: token $(TOKEN)" \
+		-H "Accept: application/vnd.github.manifold-preview" \
+		-H "Content-Type: application/octet-stream" \
+		--data-binary @nanobox-boot2docker-devel.box \
+		"https://uploads.github.com/repos/pagodabox/nanobox-boot2docker/releases/$(ID)/assets?name=nanobox-boot2docker-devel.box"
 
 .PHONY: prepare build
