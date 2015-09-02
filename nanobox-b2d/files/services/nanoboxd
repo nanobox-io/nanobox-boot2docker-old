@@ -2,18 +2,21 @@
 
 update() {
   # extract installed version
-  current=$(cat /var/nanobox/nanobox-server.md5)
+  current=$(cat /var/nanobox/nanobox-server${DEV}.md5)
+
+  # check to pull dev version
+  [ -a /mnt/sda/var/nanobox/DEV ] && DEV='-dev'
 
   # download the latest checksum
   curl \
     -f \
     -k \
     -s \
-    -o /var/nanobox/nanobox-server.md5 \
-    https://s3.amazonaws.com/tools.nanobox.io/server/linux/amd64/nanobox-server.md5
+    -o /var/nanobox/nanobox-server${DEV}.md5 \
+    https://s3.amazonaws.com/tools.nanobox.io/server/linux/amd64/nanobox-server${DEV}.md5
 
   # compare versions
-  latest=$(cat /var/nanobox/nanobox-server.md5)
+  latest=$(cat /var/nanobox/nanobox-server${DEV}.md5)
 
   if [ ! "$current" = "$latest" ]; then
     # get the latest server binary
@@ -21,24 +24,24 @@ update() {
       -f \
       -k \
       -s \
-      -o /usr/local/bin/nanobox-server \
-      https://s3.amazonaws.com/tools.nanobox.io/server/linux/amd64/nanobox-server && \
-        chmod 755 /usr/local/bin/nanobox-server
+      -o /usr/local/bin/nanobox-server${DEV} \
+      https://s3.amazonaws.com/tools.nanobox.io/server/linux/amd64/nanobox-server${DEV} && \
+        chmod 755 /usr/local/bin/nanobox-server${DEV}
   fi
 }
 
 case "${1}" in
   start)
     update
-    /usr/local/bin/nanobox-server >> /var/log/nanoboxd.log 2>&1 &
+    /usr/local/bin/nanobox-server${DEV} >> /var/log/nanoboxd.log 2>&1 &
     ;;
 
   stop)
-    pkill nanobox-server
+    pkill nanobox-server${DEV}
     ;;
 
   status)
-    pidof -o %PPID nanobox-server
+    pidof -o %PPID nanobox-server${DEV}
     ;;
 
   *)
