@@ -1,4 +1,4 @@
-FROM boot2docker/boot2docker
+FROM nanobox/boot2docker
 
 # Customize for Vagrant
 RUN mkdir -p /rootfs/home/docker/.ssh
@@ -14,15 +14,16 @@ RUN cp /lib/x86_64-linux-gnu/libacl.so.1 /rootfs/lib/libacl.so.1
 RUN cp /lib/x86_64-linux-gnu/libpopt.so.0 /rootfs/lib/libpopt.so.0
 
 # Include ipvsadm
-RUN apt-get update && apt-get install ipvsadm
+RUN apt-get update && apt-get -y install ipvsadm
 RUN cp /sbin/ipvsadm /rootfs/sbin/ipvsadm
 RUN cp /lib/x86_64-linux-gnu/libnl-genl-3.so.200 /rootfs/lib/libnl-genl-3.so.200
-# RUN cp /lib/x86_64-linux-gnu/libnl-3.so.200 /rootfs/lib/libnl-3.so.200
+RUN cp /lib/x86_64-linux-gnu/libnl-3.so.200 /rootfs/lib/libnl-3.so.200
 
 # Install nanobox-server
 RUN mkdir -p /rootfs/var/nanobox
 # Just having the nanobox-server binary on the filesystem seems to cause a kernel panic on boot (linux hosts)
 RUN echo "none" > /rootfs/var/nanobox/nanobox-server.md5
+RUN echo "none" > /rootfs/var/nanobox/nanobox-server-dev.md5
 ADD files/services/. /rootfs/etc/init.d/services/
 # [This](http://distro.ibiblio.org/tinycorelinux/corebook.pdf) is useful
 ADD files/bootscript.sh /rootfs/opt/bootscript.sh

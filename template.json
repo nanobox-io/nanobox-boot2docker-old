@@ -9,7 +9,11 @@
         "ssh_username": "docker",
         "ssh_password": "tcuser",
         "headless": "true",
-        "shutdown_command": "sudo poweroff"
+        "shutdown_command": "sudo poweroff",
+        "vboxmanage": [
+          ["modifyvm", "{{.Name}}", "--memory", "1568"],
+          ["modifyvm", "{{.Name}}", "--cpus", "2"]
+        ]
     }],
 
     "provisioners": [{
@@ -19,10 +23,6 @@
     {
       "type": "shell",
       "inline": ["sudo reboot"]
-    },
-    {
-      "type": "shell",
-      "inline": ["sudo /usr/local/etc/init.d/openssh stop"]
     },
     {
       "type": "shell",

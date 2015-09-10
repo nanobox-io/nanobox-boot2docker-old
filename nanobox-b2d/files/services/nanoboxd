@@ -5,7 +5,7 @@ update() {
   current=$(cat /var/nanobox/nanobox-server${DEV}.md5)
 
   # check to pull dev version
-  [ -a /mnt/sda/var/nanobox/DEV ] && DEV='-dev'
+  [ -e /mnt/sda/var/nanobox/DEV ] && DEV='-dev'
 
   # download the latest checksum
   curl \

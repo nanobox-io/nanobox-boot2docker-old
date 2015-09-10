@@ -21,6 +21,6 @@
         "type": "vagrant",
         "include": ["./nanobox-boot2docker.iso"],
         "vagrantfile_template": "vagrantfile.tpl",
-        "output": "nanobox-boot2docker-devel.box"
+        "output": "nanobox-boot2docker-dev.box"
     }]
 }

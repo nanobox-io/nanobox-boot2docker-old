@@ -36,7 +36,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: $script
 
   config.vm.provider "virtualbox" do |v|
-    v.customize ["modifyvm", :id, "--memory", "1500", "--ioapic", "on"]
+    v.customize ["modifyvm", :id, "--memory", "1500", "--ioapic", "on", "--cpus", "2"]
   end
 
 end
