@@ -22,7 +22,7 @@
     },
     {
       "type": "shell",
-      "inline": ["sudo reboot"]
+      "inline": ["echo 'reboooting' && sudo reboot && sleep 60 && echo 'done'"]
     },
     {
       "type": "shell",

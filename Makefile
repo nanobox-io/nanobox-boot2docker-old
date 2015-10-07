@@ -4,6 +4,7 @@ TOKEN=$(shell read -r -p "Enter Token: " token; echo $$token)
 
 build: nanobox-boot2docker.iso
 	time packer build -parallel=false template.json
+	@md5sum nanobox-boot2docker.box | cut -f1  -d' ' > nanobox-boot2docker.md5 || md5 -q nanobox-boot2docker.box > nanobox-boot2docker.md5
 
 build-dev: nanobox-boot2docker.iso
 	time packer build -parallel=false template-dev.json
@@ -40,11 +41,8 @@ release:
 	}"
 
 upload:
-	@curl -H "Authorization: token $(TOKEN)" \
-		-H "Accept: application/vnd.github.manifold-preview" \
-		-H "Content-Type: application/octet-stream" \
-		--data-binary @nanobox-boot2docker.box \
-		"https://uploads.github.com/repos/pagodabox/nanobox-boot2docker/releases/$(ID)/assets?name=nanobox-boot2docker.box"
+	@s3cmd --acl-public put nanobox-boot2docker.box nanobox-boot2docker.md5 s3://tools.nanobox.io/boxes/vagrant/
+	# @s3cmd --acl-public put nanobox-boot2docker.box nanobox-boot2docker.md5 s3://tools.nanobox.io/boxes/virtualbox/
 
 upload-dev:
 	@curl -H "Authorization: token $(TOKEN)" \
