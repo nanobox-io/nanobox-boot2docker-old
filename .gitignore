@@ -4,3 +4,4 @@ packer_cache/
 *.box
 *.iso
 nanobox-b2d/files/nanobox-server
+output-virtualbox-iso/
