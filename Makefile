@@ -3,8 +3,9 @@ ID=$(shell curl -s https://api.github.com/repos/pagodabox/nanobox-boot2docker/re
 TOKEN=$(shell read -r -p "Enter Token: " token; echo $$token)
 
 build: nanobox-boot2docker.iso
-	time packer build -parallel=false template.json
-	@md5sum nanobox-boot2docker.box | cut -f1  -d' ' > nanobox-boot2docker.md5 || md5 -q nanobox-boot2docker.box > nanobox-boot2docker.md5
+	# time packer build -parallel=false template.json
+	@packer push template.json
+	# @md5sum nanobox-boot2docker.box | cut -f1  -d' ' > nanobox-boot2docker.md5 || md5 -q nanobox-boot2docker.box > nanobox-boot2docker.md5
 
 build-dev: nanobox-boot2docker.iso
 	time packer build -parallel=false template-dev.json
@@ -41,7 +42,8 @@ release:
 	}"
 
 upload:
-	@s3cmd --acl-public put nanobox-boot2docker.box nanobox-boot2docker.md5 s3://tools.nanobox.io/boxes/vagrant/
+	@s3cmd --acl-public put nanobox-boot2docker.iso s3://tools.nanobox.io/boxes/iso/
+	# @s3cmd --acl-public put nanobox-boot2docker.box nanobox-boot2docker.md5 s3://tools.nanobox.io/boxes/vagrant/
 	# @s3cmd --acl-public put nanobox-boot2docker.box nanobox-boot2docker.md5 s3://tools.nanobox.io/boxes/virtualbox/
 
 upload-dev:
