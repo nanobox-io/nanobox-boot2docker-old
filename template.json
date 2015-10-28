@@ -2,7 +2,7 @@
   "builders": [
     {
       "type": "virtualbox-iso",
-      "iso_url": "https://s3.amazonaws.com/tools.nanobox.io/boxes/iso/nanobox-boot2docker.iso",
+      "iso_url": "./nanobox-boot2docker.iso",
       "iso_checksum_type": "none",
       "boot_wait": "10s",
       "guest_additions_mode": "attach",
@@ -51,7 +51,6 @@
       },
       {
         "type": "atlas",
-        "only": ["virtualbox-iso"],
         "artifact": "nanobox/boot2docker",
         "artifact_type": "vagrant.box",
         "metadata": {
