@@ -85,6 +85,11 @@ if modprobe hv_utils &> /dev/null; then
     /usr/sbin/hv_kvp_daemon
 fi
 
+# Temporary patch to vboxsf
+if modprobe vboxsf &> /dev/null; then
+    modprobe -a vboxsf
+fi
+
 # Launch vmware-tools
 /etc/rc.d/vmtoolsd
 
