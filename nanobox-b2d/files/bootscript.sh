@@ -90,8 +90,11 @@ if modprobe vboxsf &> /dev/null; then
     modprobe -a vboxsf
 fi
 
+# Start nfs client
+/usr/local/etc/init.d/nfs-client start
+
 # Launch vmware-tools
 /etc/rc.d/vmtoolsd
 
-# start nanobox-server
+# Start nanobox-server
 /etc/init.d/services/nanoboxd start
