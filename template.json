@@ -1,22 +1,25 @@
 {
-    "builders": [{
-        "type": "virtualbox-iso",
-        "iso_url": "./nanobox-boot2docker.iso",
-        "iso_checksum_type": "none",
-        "boot_wait": "10s",
-        "guest_additions_mode": "attach",
-        "guest_os_type": "Linux_64",
-        "ssh_username": "docker",
-        "ssh_password": "tcuser",
-        "headless": "true",
-        "shutdown_command": "sudo poweroff",
-        "vboxmanage": [
-          ["modifyvm", "{{.Name}}", "--memory", "1568"],
-          ["modifyvm", "{{.Name}}", "--cpus", "2"]
-        ]
-    }],
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "iso_url": "./nanobox-boot2docker.iso",
+      "iso_checksum_type": "none",
+      "boot_wait": "10s",
+      "guest_additions_mode": "attach",
+      "guest_os_type": "Linux_64",
+      "ssh_username": "docker",
+      "ssh_password": "tcuser",
+      "headless": "true",
+      "shutdown_command": "sudo poweroff",
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "1568"],
+        ["modifyvm", "{{.Name}}", "--cpus", "2"]
+      ]
+    }
+  ],
 
-    "provisioners": [{
+  "provisioners": [
+    {
       "type": "shell",
       "inline": ["mkfs.ext4 -F -L boot2docker-data /dev/sda"]
     },
@@ -35,12 +38,32 @@
     {
       "type": "shell",
       "inline": ["docker pull nanobox/build"]
-    }],
+    }
+  ],
 
-    "post-processors": [{
+  "post-processors": [
+    [
+      {
         "type": "vagrant",
         "include": ["./nanobox-boot2docker.iso"],
         "vagrantfile_template": "vagrantfile.tpl",
         "output": "nanobox-boot2docker.box"
-    }]
+      },
+      {
+        "type": "atlas",
+        "artifact": "nanobox/boot2docker",
+        "artifact_type": "vagrant.box",
+        "metadata": {
+            "provider": "virtualbox"
+        }
+      }
+    ]
+  ],
+
+  "push": {
+    "name": "nanobox/boot2docker",
+    "exclude": [
+      "output-virtualbox-iso"
+    ]
+  }
 }

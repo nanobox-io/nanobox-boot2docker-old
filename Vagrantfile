@@ -24,7 +24,7 @@ Vagrant.configure(2) do |config|
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
-  config.vm.box     = "nanobox/boot2docker"
+  config.vm.box     = "mitchellh/boot2docker"
   config.vm.box_url = "https://github.com/pagodabox/nanobox-boot2docker/releases/download/#{version}/nanobox-boot2docker.box"
 
   config.vm.synced_folder ".", "/vagrant"

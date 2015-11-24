@@ -1,4 +1,4 @@
-FROM nanobox/boot2docker
+FROM boot2docker/boot2docker
 
 # Customize for Vagrant
 RUN mkdir -p /rootfs/home/docker/.ssh
