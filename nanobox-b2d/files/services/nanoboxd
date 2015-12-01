@@ -1,5 +1,7 @@
 #!/bin/sh -ex
 
+: ${DOCKER_HOST:='unix:///var/run/docker.sock'}
+
 update() {
   # extract installed version
   current=$(cat /var/nanobox/nanobox-server${DEV}.md5)
