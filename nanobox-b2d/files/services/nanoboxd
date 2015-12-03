@@ -7,6 +7,9 @@ update() {
   # check to pull dev version
   [ -e /mnt/sda/var/nanobox/DEV ] && DEV='-dev'
 
+  # check to set log level
+  [ -n "$DEV" ] && NANOBOX_LOGLEVEL='debug'
+
   # download the latest checksum
   curl \
     -f \
