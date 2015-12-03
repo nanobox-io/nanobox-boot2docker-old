@@ -12,7 +12,7 @@ $script = <<SCRIPT
 # fetch nanobox custom boot2docker ISO spitter-outer
 docker pull nanobox/boot2docker
 # run custom docker image and capture output to iso
-docker run nanobox-boot2docker > /vagrant/nanobox-boot2docker.iso
+docker run nanobox/boot2docker > /vagrant/nanobox-boot2docker.iso
 SCRIPT
 
 Vagrant.configure(2) do |config|
