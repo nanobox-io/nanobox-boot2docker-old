@@ -16,10 +16,10 @@ image.
   
 To build the box, first install the following prerequisites:
 
-  * [Packer](http://www.packer.io) (at least version 0.8)
+  * [Packer](http://www.packer.io) (at least version 0.8)  
 **AND**
     * [VirtualBox](http://www.virtualbox.org) (at least version 5.0), VMware, or Parallels
-    * [Vagrant](http://www.vagrantup.com) (at least version 1.7)
+    * [Vagrant](http://www.vagrantup.com) (at least version 1.7)  
 **OR**
     * [Docker](https://www.docker.com/) (at least version)
 
