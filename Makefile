@@ -40,6 +40,11 @@ release:
 		\"draft\": false, \
 		\"prerelease\": false \
 	}"
+	@curl -H "Authorization: token $(TOKEN)" \
+		-H "Accept: application/vnd.github.manifold-preview" \
+		-H "Content-Type: application/octet-stream" \
+		--data-binary @nanobox-boot2docker.iso \
+		"https://uploads.github.com/repos/pagodabox/nanobox-boot2docker/releases/$(ID)/assets?name=nanobox-boot2docker.iso"
 
 upload:
 	@s3cmd --acl-public put nanobox-boot2docker.iso s3://tools.nanobox.io/boxes/iso/
