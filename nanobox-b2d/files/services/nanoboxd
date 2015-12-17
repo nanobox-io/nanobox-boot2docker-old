@@ -1,4 +1,4 @@
-#!/bin/sh -ex
+#!/bin/sh -e
 
 update() {
   # extract installed version
@@ -35,6 +35,8 @@ update() {
 
 case "${1}" in
   start)
+    # source proxy vars
+    [ -f /var/lib/boot2docker/profile ] && . /var/lib/boot2docker/profile
     update
     /usr/local/bin/nanobox-server${DEV} >> /var/log/nanoboxd.log 2>&1 &
     ;;
